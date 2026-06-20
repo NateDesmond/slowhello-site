@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slow Hello - Say it a word at a time.</title>
+<meta name="description" content="A message to the future, recorded a little at a time. Pick someone you love and a future day, write a short message, and say it one word a day until it becomes their gift.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='t' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23FF6F61'/%3E%3Cstop offset='1' stop-color='%23FFC4A0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='2' y='2' width='60' height='60' rx='16' fill='url(%23t)'/%3E%3Cpath d='M16 18h32a6 6 0 0 1 6 6v14a6 6 0 0 1-6 6H30l-9 8v-8h-5a6 6 0 0 1-6-6V24a6 6 0 0 1 6-6z' fill='%23FFF2E8'/%3E%3Cpath d='M32 38c-5-3.4-8-6.2-8-9.6a3.6 3.6 0 0 1 6.6-2A4.2 4.2 0 0 1 32 27a4.2 4.2 0 0 1 1.4-.6 3.6 3.6 0 0 1 6.6 2c0 3.4-3 6.2-8 9.6z' fill='%23FF6F61'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --coral:#FF6F61; --coral-light:#FF8E6E; --peach:#FFC4A0;
+    --cream:#FFF2E8; --ivory:#FFFDF9; --terracotta:#9A3F2A;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; color:var(--terracotta); background:var(--ivory);
+    font-family:"Nunito",ui-rounded,-apple-system,"Segoe UI Rounded","SF Pro Rounded",system-ui,sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{line-height:1.2; margin:0 0 .4em}
+  h1{font-size:clamp(2.4rem,7vw,4rem); font-weight:800; letter-spacing:-.02em}
+  h2{font-size:clamp(1.5rem,4vw,2.1rem); font-weight:800}
+  h3{font-size:1.15rem; font-weight:700}
+  p{margin:0 0 1em}
+  a{color:var(--coral); text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:880px; margin:0 auto; padding:0 22px}
+  section{padding:64px 0}
+  .rule{border:none; border-top:1px solid rgba(154,63,42,.12); max-width:880px; margin:0 auto}
+
+  /* Hero */
+  .hero{
+    background:linear-gradient(160deg,var(--coral) 0%,var(--coral-light) 42%,var(--peach) 100%);
+    color:#fff; text-align:center; padding:72px 0 84px;
+  }
+  .hero h1{color:#fff}
+  .mark{width:104px; height:104px; margin:0 auto 22px; display:block; filter:drop-shadow(0 8px 22px rgba(154,63,42,.28))}
+  .tagline{font-size:clamp(1.15rem,3vw,1.5rem); font-weight:700; margin:.2em 0 .5em; color:var(--cream)}
+  .lead{max-width:560px; margin:0 auto 30px; color:rgba(255,253,249,.95)}
+  .badge{
+    display:inline-flex; align-items:center; gap:10px;
+    background:var(--cream); color:var(--terracotta);
+    font-weight:700; padding:14px 26px; border-radius:999px;
+    box-shadow:0 8px 22px rgba(154,63,42,.25);
+  }
+  .badge small{display:block; font-weight:600; font-size:.78rem; opacity:.75}
+  .badge .apple{font-size:1.4rem; line-height:1}
+
+  /* Value prop */
+  .valueprop{text-align:center; background:var(--cream)}
+  .valueprop p{font-size:clamp(1.2rem,3.2vw,1.55rem); font-weight:700; max-width:640px; margin:0 auto; color:var(--terracotta)}
+  .valueprop .sub{font-size:1rem; font-weight:600; opacity:.8; margin-top:.6em}
+
+  /* Steps */
+  .steps{display:grid; gap:22px; grid-template-columns:repeat(3,1fr); margin-top:34px}
+  .step{
+    background:var(--cream); border-radius:20px; padding:26px 22px;
+    box-shadow:0 6px 18px rgba(154,63,42,.07);
+  }
+  .num{
+    width:42px; height:42px; border-radius:50%; display:grid; place-items:center;
+    background:linear-gradient(150deg,var(--coral),var(--peach)); color:#fff;
+    font-weight:800; margin-bottom:14px;
+  }
+
+  /* Features */
+  .features{display:grid; gap:22px; grid-template-columns:repeat(2,1fr); margin-top:34px}
+  .feat{
+    background:var(--cream); border-radius:20px; padding:26px 24px;
+    box-shadow:0 6px 18px rgba(154,63,42,.07);
+  }
+  .feat .ico{font-size:1.7rem; margin-bottom:8px}
+
+  /* Delivery card sample */
+  .card{
+    background:linear-gradient(155deg,var(--coral-light),var(--peach));
+    color:#fff; border-radius:22px; padding:28px; text-align:center;
+    box-shadow:0 10px 26px rgba(154,63,42,.18); max-width:360px; margin:30px auto 0;
+  }
+  .card .play{
+    width:62px; height:62px; border-radius:50%; background:rgba(255,253,249,.92);
+    color:var(--coral); display:grid; place-items:center; margin:0 auto 14px; font-size:1.5rem;
+  }
+  .card h3{color:#fff; margin-bottom:.2em}
+  .card .meta{font-weight:700; color:var(--cream); font-size:.95rem}
+
+  /* Section heads */
+  .eyebrow{text-transform:uppercase; letter-spacing:.12em; font-size:.8rem; font-weight:800; color:var(--coral); margin-bottom:.4em}
+  .center{text-align:center}
+
+  /* About / support */
+  .about p, .support p{max-width:640px; margin-left:auto; margin-right:auto}
+  .btn{
+    display:inline-block; background:var(--coral); color:#fff; font-weight:700;
+    padding:13px 28px; border-radius:999px; box-shadow:0 6px 16px rgba(255,111,97,.4);
+  }
+  .btn:hover{background:var(--coral-light); text-decoration:none}
+
+  /* Footer */
+  footer{background:var(--terracotta); color:var(--cream); padding:40px 0; text-align:center}
+  footer a{color:var(--peach)}
+  .flinks{display:flex; gap:22px; justify-content:center; flex-wrap:wrap; margin-bottom:14px; font-weight:700}
+  .copy{font-size:.85rem; opacity:.8}
+
+  @media(max-width:680px){
+    .steps,.features{grid-template-columns:1fr}
+    section{padding:48px 0}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+      <defs><linearGradient id="ht" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF6F61"/><stop offset="1" stop-color="#FFC4A0"/></linearGradient></defs>
+      <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#ht)"/>
+      <path d="M16 18h32a6 6 0 0 1 6 6v14a6 6 0 0 1-6 6H30l-9 8v-8h-5a6 6 0 0 1-6-6V24a6 6 0 0 1 6-6z" fill="#FFF2E8"/>
+      <path d="M32 38c-5-3.4-8-6.2-8-9.6a3.6 3.6 0 0 1 6.6-2A4.2 4.2 0 0 1 32 27a4.2 4.2 0 0 1 1.4-.6 3.6 3.6 0 0 1 6.6 2c0 3.4-3 6.2-8 9.6z" fill="#FF6F61"/>
+    </svg>
+    <h1>Slow Hello</h1>
+    <p class="tagline">Say it a word at a time.</p>
+    <p class="lead">A message to the future, recorded a little at a time. Pick someone you love and a future day, then say your message one word a day until it becomes their gift.</p>
+    <!-- When live, swap this badge for the App Store link: https://apps.apple.com/app/6782214415 -->
+    <span class="badge"><span class="apple">&#63743;</span><span>Coming soon to the App Store<small>Currently in TestFlight</small></span></span>
+  </div>
+</header>
+
+<section class="valueprop">
+  <div class="wrap">
+    <p>Proof you've been thinking of them.</p>
+    <p class="sub">The finished gift shows you have been saying it, a word a day, for weeks. Time spent is love proven.</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section id="how">
+  <div class="wrap center">
+    <p class="eyebrow">How it works</p>
+    <h2>A month of small moments, one big gift.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <h3>Choose who and when</h3>
+        <p>Pick someone you love and a future day. A birthday, an anniversary, a graduation.</p>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <h3>Write your message</h3>
+        <p>Write a short message and we split it into one word a day, paced to land right on the day.</p>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <h3>Record a word a day</h3>
+        <p>Say that day's word in a quick video. On the day, the clips stitch into their gift.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section>
+  <div class="wrap center">
+    <p class="eyebrow">Features</p>
+    <h2>Built to be sincere, and private.</h2>
+    <div class="features">
+      <div class="feat">
+        <div class="ico">&#128274;</div>
+        <h3>Private by design</h3>
+        <p>Everything stays on your device. No account, no servers, no data collected. Your words are just for them.</p>
+      </div>
+      <div class="feat">
+        <div class="ico">&#128197;</div>
+        <h3>A warm word calendar</h3>
+        <p>A gentle calendar of the words you have said so far, so you can watch the message take shape.</p>
+      </div>
+      <div class="feat">
+        <div class="ico">&#128276;</div>
+        <h3>A gentle daily reminder</h3>
+        <p>A soft nudge each day to record that day's word. A few seconds is all it takes.</p>
+      </div>
+      <div class="feat">
+        <div class="ico">&#127873;</div>
+        <h3>A dated delivery card</h3>
+        <p>The finished gift carries the proof of the effort, so they can see how long you have been at it.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="play">&#9658;</div>
+      <h3>For Mara</h3>
+      <p class="meta">Recorded over 14 days</p>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="about center">
+  <div class="wrap">
+    <p class="eyebrow">About</p>
+    <h2>Made with care.</h2>
+    <p>Slow Hello is a small, loving app made by Urban Algorithm LLC. It is not a journal or a vocabulary app. It is a slow gift, built on a simple idea: the most moving thing you can give someone is your time, a word at a time.</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section id="support" class="support center">
+  <div class="wrap">
+    <p class="eyebrow">Support</p>
+    <h2>We'd love to hear from you.</h2>
+    <p>Questions, ideas, or need a hand? Get in touch and we will reply.</p>
+    <p><a class="btn" href="https://urbanalgorithm.com/#contact">Contact us</a></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="flinks">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="https://urbanalgorithm.com/#contact">Support</a>
+    </div>
+    <p class="copy">&copy; 2026 Urban Algorithm LLC</p>
+  </div>
+</footer>
+
+</body>
+</html>
